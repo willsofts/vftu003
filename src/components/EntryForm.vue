@@ -8,6 +8,13 @@
         <div class="row row-height">
           <div class="col-height col-md-7">
             <label for="apiname">{{ labels.apiname_label }}</label>
+            <a href="javascript:void(0)" class="info-linker popover-linker">
+              <i class="fa fa-info-circle"
+                data-toggle="popover"
+                data-trigger="click"
+                data-content="This is api name to invoke by dataservice/lookup or dataserice/lists. ex. http://localhost:8080/api/dataservice/lookup?apiname=api_name&field=value">
+              </i>
+            </a>
             <div class="input-group has-validation" :class="{'has-error': v$.apiname.$error}">
               <input type="text" ref="apiname" v-model="localData.apiname" id="apiname" class="form-control input-md" maxlength="50" :disabled="disabledKeyField"/> 
               <label class="required">*</label>
@@ -18,6 +25,13 @@
         <div class="row row-height">
           <div class="col-height col-md-10">
             <label for="apiquery">{{ labels.apiquery_label }}</label>
+            <a href="javascript:void(0)" class="info-linker popover-linker">
+              <i class="fa fa-info-circle"
+                data-toggle="popover"
+                data-trigger="click"
+                data-content="This is query statement that can defined parameter with place holder by ? sign ex. select * from table where field=?field">
+              </i>
+            </a>
             <div class="input-group has-validation" :class="{'has-error': v$.apiquery.$error}">
               <textarea ref="apiquery" v-model="localData.apiquery" id="apiquery" class="form-control input-md" rows="10" /> 
               <label class="required">*</label>
@@ -36,6 +50,18 @@
             </div>
             <span v-if="v$.inactive.$error" class="has-error">{{ v$.inactive.$errors[0].$message }}</span>
           </div>
+          <div class="col-height col-md-4">
+            <label for="apisection">{{ labels.apisection_label }}</label>
+            <a href="javascript:void(0)" class="info-linker popover-linker">
+              <i class="fa fa-info-circle"
+                data-toggle="popover"
+                data-trigger="click"
+                data-html="true"
+                data-content="This is database connector section defined by configuration setting. see <a href='https://github.com/willsofts/will-sql' target='willsql_window'>will-sql</a>">
+              </i>
+            </a>
+            <input type="text" ref="apisection" v-model="localData.apisection" id="apisection" class="form-control input-md" maxlength="30" /> 
+          </div>
         </div>
     </template>
     <template v-slot:footer>
@@ -45,6 +71,9 @@
     </template>
   </DialogForm>
 </template>
+<style>
+a.popover-linker { margin-left: 5px; }
+</style>
 <script>
 import { ref, computed, watch } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
@@ -59,6 +88,7 @@ const APP_URL = "/api/sftu003";
 const defaultData = {
   apiname: "",
   apiquery: "",
+  apisection: "",
   inactive: "0",
 };
 
@@ -106,6 +136,7 @@ export default {
   mounted() {
     this.$nextTick(function () {
       $("#modaldialog_layer").find(".modal-dialog").draggable();
+      $('[data-toggle="popover"]').popover();
     });
   },
   methods: {
