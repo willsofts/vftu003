@@ -8,7 +8,7 @@
         <div class="row row-height">
           <div class="col-height col-md-7">
             <label for="apiname">{{ labels.apiname_label }}</label>
-            <a href="javascript:void(0)" class="info-linker popover-linker">
+            <a href="javascript:void(0)" class="info-linker popover-linker" tabIndex="-1">
               <i class="fa fa-info-circle"
                 data-toggle="popover"
                 data-trigger="click"
@@ -21,11 +21,28 @@
             </div>
             <span v-if="v$.apiname.$error" class="has-error">{{ v$.apiname.$errors[0].$message }}</span>
           </div>
+          <div class="col-height col-md-3">
+            <label>{{ labels.apitype_label }}</label>
+            <a href="javascript:void(0)" class="info-linker popover-linker" tabIndex="-1">
+              <i class="fa fa-info-circle"
+                data-toggle="popover"
+                data-trigger="click"
+                data-content="This is api type, specified 'STATEMENT' for cached data query.">
+              </i>
+            </a>
+            <div class="input-group has-validation" :class="{'has-error': v$.apitype.$error}">
+              <select ref="apitype" v-model="localData.apitype" class="form-control input-md">
+                <option v-for="item in dataCategory.tapitype" :key="item.id" :value="item.id">{{item.text}}</option>
+              </select>
+              <label class="required">*</label>
+            </div>
+            <span v-if="v$.apitype.$error" class="has-error">{{ v$.apitype.$errors[0].$message }}</span>
+          </div>
         </div>
         <div class="row row-height">
           <div class="col-height col-md-10">
             <label for="apiquery">{{ labels.apiquery_label }}</label>
-            <a href="javascript:void(0)" class="info-linker popover-linker">
+            <a href="javascript:void(0)" class="info-linker popover-linker" tabIndex="-1">
               <i class="fa fa-info-circle"
                 data-toggle="popover"
                 data-trigger="click"
@@ -52,7 +69,7 @@
           </div>
           <div class="col-height col-md-4">
             <label for="apisection">{{ labels.apisection_label }}</label>
-            <a href="javascript:void(0)" class="info-linker popover-linker">
+            <a href="javascript:void(0)" class="info-linker popover-linker" tabIndex="-1">
               <i class="fa fa-info-circle"
                 data-toggle="popover"
                 data-trigger="click"
@@ -87,6 +104,7 @@ import DialogForm from './DialogForm.vue';
 const APP_URL = "/api/sftu003";
 const defaultData = {
   apiname: "",
+  apitype: "API",
   apiquery: "",
   apisection: "",
   inactive: "0",
@@ -113,6 +131,7 @@ export default {
     const validateRules = computed(() => { 
       return {
         apiname: { required: requiredMessage() },
+        apitype: { required: requiredMessage() },
         apiquery: { required: requiredMessage() },
         inactive: { required: requiredMessage() },
       } 

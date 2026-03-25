@@ -28,6 +28,7 @@ export default {
     const dataChunk = {};
     const dataCategory = {
       tkactive: [{id: "0", text: "Active"}, {id: "1", text: "Inactive"}],
+      tapitype: [{id: "API", text: "API"}, {id: "SMT", text: "STATEMENT"}]
     };
     let labels = ref(getLabelModel());
     let alreadyLoading = ref(false);
